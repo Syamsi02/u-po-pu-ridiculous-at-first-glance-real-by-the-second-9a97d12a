@@ -1,29 +1,27 @@
-"""Ridiculous at First Glance, Real by the Second.
+#!/usr/bin/env python3
+"""Write one bizarre-but-sound startup pitch to /output/entry.txt.
 
-Writes one sentence (<=200 chars) pitching a bizarre startup idea to
-/output/entry.txt. Pure Python 3.13 standard library, deterministic.
+The pitch is a single sentence of at most 200 characters: a startup
+idea that sounds ridiculous at first glance yet holds together as a
+real business once the reader sees who pays and why.
 """
 
 import os
-import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-SENTENCE = (
-    "We lease goat herds to solar farms as living lawnmowers, "
-    "charging operators per acre while the goats fertilize the shaded "
-    "soil and slash herbicide bills."
+PITCH = (
+    "We sell funerals for dead houseplants: a tiny coffin, a eulogy, "
+    "and a replacement plant, because grieving plant parents pay to "
+    "bury the guilt and always buy the next one."
 )
 
 
 def main() -> None:
-    text = SENTENCE.strip()
-    assert 1 <= len(text) <= 200, "entry must be 1-200 characters"
-    assert text.count(".") == 1 and text.endswith("."), "entry must be one sentence"
-    assert text.strip() == text, "entry must not be only whitespace"
+    text = " ".join(PITCH.split())
+    if not 1 <= len(text) <= 200:
+        raise SystemExit(f"pitch is {len(text)} characters, must be 1-200")
     os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(text)
+    with open("/output/entry.txt", "w", encoding="utf-8", newline="") as handle:
+        handle.write(text)
 
 
 if __name__ == "__main__":
